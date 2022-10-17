@@ -1,4 +1,3 @@
-// <<<<<<< paulo_branch
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -48,18 +47,3 @@ const StatusEnvio = () => {
 };
 
 export default StatusEnvio;
-// =======
-import EnviosStickyHeadTable from './Envios';
-import SRows from './data/envios-list-linhas';
-import SColumns from './data/envios-list-columns';
-
-const Envios = () => {
-    return (
-        <>
-            <EnviosStickyHeadTable rows={SRows} columns={SColumns} />
-        </>
-    );
-};
-
-export default Envios;
-// >>>>>>> main

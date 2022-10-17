@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { React, useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -10,8 +11,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 const EnviosStickyHeadTable = ({ rows, columns }) => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(15);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(15);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);

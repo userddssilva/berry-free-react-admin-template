@@ -3,9 +3,9 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import { element } from 'prop-types';
 
 // dashboard routing
-const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 const CadastrarEnvio = Loadable(lazy(() => import('views/cadastro')));
 const MeusEnvios = Loadable(lazy(() => import('views/envios')));
 const Dashboard = Loadable(lazy(() => import('views/dashboard')));
@@ -21,7 +21,7 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 // send list routing
-const Shipments = Loadable(lazy(() => import('views/envios')));
+const Listagem = Loadable(lazy(() => import('views/listagem')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -46,58 +46,58 @@ const MainRoutes = {
             element: <MeusEnvios />
         },
         {
-            path: 'utils',
-            children: [
-                {
-                    path: 'util-typography',
-                    element: <UtilsTypography />
-                }
-            ]
-        },
-        {
-            path: 'utils',
-            children: [
-                {
-                    path: 'util-color',
-                    element: <UtilsColor />
-                }
-            ]
-        },
-        {
-            path: 'utils',
-            children: [
-                {
-                    path: 'util-shadow',
-                    element: <UtilsShadow />
-                }
-            ]
-        },
-        {
-            path: 'icons',
-            children: [
-                {
-                    path: 'tabler-icons',
-                    element: <UtilsTablerIcons />
-                }
-            ]
-        },
-        {
-            path: 'icons',
-            children: [
-                {
-                    path: 'material-icons',
-                    element: <UtilsMaterialIcons />
-                }
-            ]
-        },
-        {
-            path: 'sample-page',
-            element: <SamplePage />
-        },
-        {
-            path: 'shipments',
-            element: <Shipments />
+            path: 'listagem',
+            element: <Listagem />
         }
+        // {
+        //     path: 'utils',
+        //     children: [
+        //         {
+        //             path: 'util-typography',
+        //             element: <UtilsTypography />
+        //         }
+        //     ]
+        // },
+        // {
+        //     path: 'utils',
+        //     children: [
+        //         {
+        //             path: 'util-color',
+        //             element: <UtilsColor />
+        //         }
+        //     ]
+        // },
+        // {
+        //     path: 'utils',
+        //     children: [
+        //         {
+        //             path: 'util-shadow',
+        //             element: <UtilsShadow />
+        //         }
+        //     ]
+        // },
+        // {
+        //     path: 'icons',
+        //     children: [
+        //         {
+        //             path: 'tabler-icons',
+        //             element: <UtilsTablerIcons />
+        //         }
+        //     ]
+        // },
+        // {
+        //     path: 'icons',
+        //     children: [
+        //         {
+        //             path: 'material-icons',
+        //             element: <UtilsMaterialIcons />
+        //         }
+        //     ]
+        // },
+        // {
+        //     path: 'sample-page',
+        //     element: <SamplePage />
+        // }
     ]
 };
 

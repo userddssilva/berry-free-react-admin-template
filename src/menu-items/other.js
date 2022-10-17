@@ -11,14 +11,6 @@ const other = {
     type: 'group',
     children: [
         {
-            id: 'shipments',
-            title: 'Envios',
-            type: 'item',
-            url: '/shipments',
-            icon: icons.IconList,
-            breadcrumbs: false
-        },
-        {
             id: 'sample-page',
             title: 'Sample Page',
             type: 'item',
