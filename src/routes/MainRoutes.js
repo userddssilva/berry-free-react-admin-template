@@ -8,6 +8,7 @@ import Loadable from 'ui-component/Loadable';
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 const CadastrarEnvio = Loadable(lazy(() => import('views/cadastro')));
 const MeusEnvios = Loadable(lazy(() => import('views/envios')));
+const Dashboard = Loadable(lazy(() => import('views/dashboard')));
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
@@ -19,6 +20,9 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
+// send list routing
+const Shipments = Loadable(lazy(() => import('views/envios')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -27,16 +31,11 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            element: <DashboardDefault />
+            element: <Dashboard />
         },
         {
             path: 'dashboard',
-            children: [
-                {
-                    path: 'default',
-                    element: <DashboardDefault />
-                }
-            ]
+            element: <Dashboard />
         },
         {
             path: 'cadastro',
@@ -94,6 +93,10 @@ const MainRoutes = {
         {
             path: 'sample-page',
             element: <SamplePage />
+        },
+        {
+            path: 'shipments',
+            element: <Shipments />
         }
     ]
 };
