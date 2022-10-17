@@ -5,6 +5,9 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
+const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
+const CadastrarEnvio = Loadable(lazy(() => import('views/cadastro')));
+const MeusEnvios = Loadable(lazy(() => import('views/envios')));
 const Dashboard = Loadable(lazy(() => import('views/dashboard')));
 
 // utilities routing
@@ -33,6 +36,14 @@ const MainRoutes = {
         {
             path: 'dashboard',
             element: <Dashboard />
+        },
+        {
+            path: 'cadastro',
+            element: <CadastrarEnvio />
+        },
+        {
+            path: 'envios',
+            element: <MeusEnvios />
         },
         {
             path: 'utils',
