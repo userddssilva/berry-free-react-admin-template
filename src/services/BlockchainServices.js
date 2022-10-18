@@ -1,19 +1,19 @@
-import 'dotenv/config';
+// import 'dotenv/config';
 
-import ContractTransportRegister from './ContractTransportRegister.js';
-// import singer from './Singer.js';
+// import ContractTransportRegister from './ContractTransportRegister.js';
+// // import singer from './Singer.js';
 
-// Register new package
-const registerPackage = async (newPackage, receiveAddress) => {
-    await ContractTransportRegister.registerPackage(newPackage, receiveAddress)
-        // .send({ from: singer.address, gas: process.env.DEFAULT_GAS })
-        .then((result) => {
-            console.log('Result register: ', result);
-        })
-        .catch((error) => {
-            console.warn('Error: Register pacakge', error);
-        });
-};
+// // Register new package
+// const registerPackage = async (newPackage, receiveAddress) => {
+//     await ContractTransportRegister.registerPackage(newPackage, receiveAddress)
+//         // .send({ from: singer.address, gas: process.env.DEFAULT_GAS })
+//         .then((result) => {
+//             console.log('Result register: ', result);
+//         })
+//         .catch((error) => {
+//             console.warn('Error: Register pacakge', error);
+//         });
+// };
 
 // // Get a package by ID
 // const getPackage = async (packageId) => {

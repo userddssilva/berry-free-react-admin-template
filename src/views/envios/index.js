@@ -3,6 +3,19 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import myContract from 'views/myContract';
+
+// Register new package
+const registerPackage = async (newPackage, receiveAddress) => {
+    await ContractTransportRegister.registerPackage(newPackage, receiveAddress)
+        // .send({ from: singer.address, gas: process.env.DEFAULT_GAS })
+        .then((result) => {
+            console.log('Result register: ', result);
+        })
+        .catch((error) => {
+            console.warn('Error: Register pacakge', error);
+        });
+};
 
 const StatusEnvio = () => {
     return (
