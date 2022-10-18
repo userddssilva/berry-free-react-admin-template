@@ -3,11 +3,8 @@ import SRows from './data/envios-list-linhas';
 import SColumns from './data/envios-list-columns';
 import myContract from 'views/myContract';
 
-
 // Get all packages storage
 const listPackages = async () => {
-
-    console.log('clicado');
   await myContract.methods
     .listMySentPackages()
     .call()

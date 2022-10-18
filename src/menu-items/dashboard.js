@@ -31,7 +31,7 @@ const dashboard = {
         },
         {
             id: 'envios3',
-            title: 'Meus Envios',
+            title: 'Update Envio',
             type: 'item',
             url: '/envios',
             icon: icons.IconClipboardList,
