@@ -12,6 +12,11 @@ import TotalCanceladosCard from './TotalCanceladosCard';
 import TotalStatusEnviosBarChartCard from './TotalStatusEnviosBarChartCard';
 import { gridSpacing } from 'store/constant';
 
+import "dotenv/config";
+
+import registerPackage from "../../services.js";
+import web3 from 'services/Web';
+
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
@@ -19,6 +24,10 @@ const Dashboard = () => {
     useEffect(() => {
         setLoading(false);
     }, []);
+
+    const activateLasers = () => {
+        registerPackage(process.env.DATA_PACKAGE, web3.eth.defaultAccount);
+    }
 
     return (
         <Grid container spacing={gridSpacing}>
@@ -49,6 +58,7 @@ const Dashboard = () => {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <UltimosConcluidosCard isLoading={isLoading} />
+                        <button onclick="activateLasers()">Activate Lasers</button>
                     </Grid>
                 </Grid>
             </Grid>
