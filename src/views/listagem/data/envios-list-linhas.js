@@ -1,5 +1,3 @@
-import myContract from "views/myContract";
-
 const createData = (id, name, status) => {
     return { id, name, status };
 };

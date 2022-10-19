@@ -12,9 +12,6 @@ import TotalCanceladosCard from "./TotalCanceladosCard";
 import TotalStatusEnviosBarChartCard from "./TotalStatusEnviosBarChartCard";
 import { gridSpacing } from "store/constant";
 
-import web3 from "../web.js";
-import myContract from "../myContract";
-
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
