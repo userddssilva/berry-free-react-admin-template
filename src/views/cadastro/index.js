@@ -6,7 +6,8 @@ import { makeStyles } from '@mui/styles';
 import { useState } from 'react';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import { Grid } from '@mui/material';
-
+import Web3 from 'web3';
+import myContract from 'views/myContract';
 // Para as margens
 
 const useStyles = makeStyles({
@@ -16,6 +17,26 @@ const useStyles = makeStyles({
         marginRight: 10
     }
 });
+
+// Register new package
+const registerPackage = async (newPackage, receiveAddress) => {
+    window.ethereum.request({ method: "eth_requestAccounts" });
+  
+    const web3 = new Web3(window.ethereum);
+  
+    const sendAddress = await web3.eth.getAccounts();
+
+    await myContract.methods
+      .registerPackage(newPackage, receiveAddress)
+      .send({ from: sendAddress[0] })
+      .then((result) => {
+        console.log("Result register: ", result);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.warn("Error: Register pacakge", error);
+      });
+    };
 
 export default function Cadastrar() {
     const classes = useStyles();
@@ -89,6 +110,7 @@ export default function Cadastrar() {
 
         if (estado && cidade && bairro && rua && numero && complemento && hash && desc) {
             console.log(estado, cidade, bairro, rua, numero, complemento, hash, desc);
+            registerPackage([desc, [rua, bairro, cidade, estado, numero, complemento]], hash);
         }
     };
 
