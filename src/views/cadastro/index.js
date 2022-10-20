@@ -2,6 +2,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import { makeStyles } from '@mui/styles';
 import { useState } from 'react';
 import { KeyboardArrowRight } from '@mui/icons-material';
@@ -18,31 +20,13 @@ const useStyles = makeStyles({
     }
 });
 
-// Register new package
-const registerPackage = async (newPackage, receiveAddress) => {
-    window.ethereum.request({ method: "eth_requestAccounts" });
-  
-    const web3 = new Web3(window.ethereum);
-  
-    const sendAddress = await web3.eth.getAccounts();
-
-    await myContract.methods
-      .registerPackage(newPackage, receiveAddress)
-      .send({ from: sendAddress[0] })
-      .then((result) => {
-        console.log("Result register: ", result);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.warn("Error: Register pacakge", error);
-      });
-    };
 
 export default function Cadastrar() {
     const classes = useStyles();
 
-    // Declaraões das Variáveis
+    const [isLoading, setIsLoadding] = useState(false);
 
+    // Declaraões das Variáveis
     const [estado, setEstado] = useState('');
     const [cidade, setCidade] = useState('');
     const [bairro, setBairro] = useState('');
@@ -53,7 +37,6 @@ export default function Cadastrar() {
     const [desc, setDesc] = useState('');
 
     // Variáveis auxiliares para checagem dos campos
-
     const [estadoError, setEstadoError] = useState(false);
     const [cidadeError, setCidadeError] = useState(false);
     const [bairroError, setBairroError] = useState(false);
@@ -63,8 +46,28 @@ export default function Cadastrar() {
     const [hashError, setHashError] = useState(false);
     const [descError, setDescError] = useState(false);
 
-    // Checagens e Submissão
+    // Register new package
+    const registerPackage = async (newPackage, receiveAddress) => {
+        window.ethereum.request({ method: "eth_requestAccounts" });
 
+        const web3 = new Web3(window.ethereum);
+        const sendAddress = await web3.eth.getAccounts();
+
+        await myContract.methods
+            .registerPackage(newPackage, receiveAddress)
+            .send({ from: sendAddress[0] })
+            .then((result) => {
+                console.log("Result register: ", result);
+                setIsLoadding(!isLoading);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.warn("Error: Register pacakge", error);
+                setIsLoadding(!isLoading);
+            });
+    };
+
+    // Checagens e Submissão
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -107,105 +110,111 @@ export default function Cadastrar() {
         }
 
         // Submissão: só prossegue com todos os campos preenchidos
-
+        
         if (estado && cidade && bairro && rua && numero && complemento && hash && desc) {
             console.log(estado, cidade, bairro, rua, numero, complemento, hash, desc);
             registerPackage([desc, [rua, bairro, cidade, estado, numero, complemento]], hash);
+            setIsLoadding(!isLoading);
         }
     };
 
     return (
-        <Container>
-            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                <Typography variant="h5" gutterBottom>
-                    Endereço do Envio
-                </Typography>
-                <TextField
-                    onChange={(e) => setEstado(e.target.value)}
-                    className={classes.field}
-                    id="outlined"
-                    label="Estado do Brasil"
-                    required
-                    error={estadoError}
-                />
-                <TextField
-                    onChange={(e) => setCidade(e.target.value)}
-                    className={classes.field}
-                    id="outlined-textarea"
-                    label="Cidade"
-                    multiline
-                    required
-                    error={cidadeError}
-                />
-                <TextField
-                    onChange={(e) => setBairro(e.target.value)}
-                    className={classes.field}
-                    id="outlined-textarea"
-                    label="Bairro ou Distrito"
-                    multiline
-                    required
-                    error={bairroError}
-                />
-                <TextField
-                    onChange={(e) => setRua(e.target.value)}
-                    className={classes.field}
-                    id="outlined-textarea"
-                    label="Nome da Rua"
-                    multiline
-                    required
-                    error={ruaError}
-                />
-                <TextField
-                    onChange={(e) => setNumero(e.target.value)}
-                    className={classes.field}
-                    id="outlined-textarea"
-                    label="Número"
-                    multiline
-                    required
-                    error={numeroError}
-                />
-                <TextField
-                    onChange={(e) => setComplemento(e.target.value)}
-                    className={classes.field}
-                    id="outlined-textarea"
-                    label="Complemento"
-                    multiline
-                    required
-                    fullWidth
-                    error={complementoError}
-                />
+        <>
+            {!isLoading ?
+                <Container>
+                    <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                        <Typography variant="h5" gutterBottom>
+                            Endereço do Envio
+                        </Typography>
+                        <TextField
+                            onChange={(e) => setEstado(e.target.value)}
+                            className={classes.field}
+                            id="outlined"
+                            label="Estado do Brasil"
+                            required
+                            error={estadoError}
+                        />
+                        <TextField
+                            onChange={(e) => setCidade(e.target.value)}
+                            className={classes.field}
+                            id="outlined-textarea"
+                            label="Cidade"
+                            multiline
+                            required
+                            error={cidadeError}
+                        />
+                        <TextField
+                            onChange={(e) => setBairro(e.target.value)}
+                            className={classes.field}
+                            id="outlined-textarea"
+                            label="Bairro ou Distrito"
+                            multiline
+                            required
+                            error={bairroError}
+                        />
+                        <TextField
+                            onChange={(e) => setRua(e.target.value)}
+                            className={classes.field}
+                            id="outlined-textarea"
+                            label="Nome da Rua"
+                            multiline
+                            required
+                            error={ruaError}
+                        />
+                        <TextField
+                            onChange={(e) => setNumero(e.target.value)}
+                            className={classes.field}
+                            id="outlined-textarea"
+                            label="Número"
+                            multiline
+                            required
+                            error={numeroError}
+                        />
+                        <TextField
+                            onChange={(e) => setComplemento(e.target.value)}
+                            className={classes.field}
+                            id="outlined-textarea"
+                            label="Complemento"
+                            multiline
+                            required
+                            fullWidth
+                            error={complementoError}
+                        />
 
-                <Typography variant="h5" gutterBottom>
-                    Dados do Pacote
-                </Typography>
+                        <Typography variant="h5" gutterBottom>
+                            Dados do Pacote
+                        </Typography>
 
-                <TextField
-                    onChange={(e) => setHash(e.target.value)}
-                    className={classes.field}
-                    id="outlined"
-                    label="Hash Destinatário"
-                    required
-                    fullWidth
-                    error={hashError}
-                />
-                <TextField
-                    onChange={(e) => setDesc(e.target.value)}
-                    id="outlined"
-                    label="Descrição do Pacote"
-                    multiline
-                    required
-                    className={classes.field}
-                    fullWidth
-                    rows={3}
-                    error={descError}
-                />
-                <p></p>
-                <Grid container direction="column" alignItems="center">
-                    <Button size="large" variant="contained" margin="dense" endIcon={<KeyboardArrowRight />} type="submit">
-                        Cadastrar Novo Envio
-                    </Button>
-                </Grid>
-            </form>
-        </Container>
+                        <TextField
+                            onChange={(e) => setHash(e.target.value)}
+                            className={classes.field}
+                            id="outlined"
+                            label="Hash Destinatário"
+                            required
+                            fullWidth
+                            error={hashError}
+                        />
+                        <TextField
+                            onChange={(e) => setDesc(e.target.value)}
+                            id="outlined"
+                            label="Descrição do Pacote"
+                            multiline
+                            required
+                            className={classes.field}
+                            fullWidth
+                            rows={3}
+                            error={descError}
+                        />
+                        <p></p>
+                        <Grid container direction="column" alignItems="center">
+                            <Button size="large" variant="contained" margin="dense" endIcon={<KeyboardArrowRight />} type="submit">
+                                Cadastrar Novo Envio
+                            </Button>
+                        </Grid>
+                    </form>
+                </Container>
+                : <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><CircularProgress /></Box>
+            }
+        </>
     );
 }
