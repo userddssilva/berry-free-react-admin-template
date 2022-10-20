@@ -7,6 +7,10 @@ import { Input } from "@mui/material";
 import myContract from "views/myContract";
 import web3 from "views/web";
 
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
+
 // const registerPackage = async () => {
 //   window.ethereum.request({ method: "eth_requestAccounts" });
 
@@ -37,13 +41,13 @@ const formatData = (packagesObject) => {
   let items = [];
   packagesObject.map((item) => {
     let dataStatus = item[5];
-    
-	if (dataStatus == "0") dataStatus = "Em processamento";
+
+    if (dataStatus == "0") dataStatus = "Em processamento";
     if (dataStatus == "1") dataStatus = "Em transporte";
     if (dataStatus == "2") dataStatus = "Entregue";
     if (dataStatus == "3") dataStatus = "Cancelado";
-    
-	let data = createData(item[0], item[1], dataStatus);
+
+    let data = createData(item[0], item[1], dataStatus);
     items.push(data);
     console.log(data);
   });
@@ -52,6 +56,7 @@ const formatData = (packagesObject) => {
 
 const Listagem = () => {
   const [packages, setPackages] = useState([]);
+  const [isLoading, setIsLoadding] = useState(true);
 
   useEffect(() => {
     // Fetch data
@@ -63,9 +68,11 @@ const Listagem = () => {
         .then((res) => {
           console.log(res);
           setPackages(res);
+          setIsLoadding(!isLoading);
         })
         .catch((err) => {
           console.log(err);
+          setIsLoadding(!isLoading);
         });
     };
     fetchData();
@@ -73,7 +80,11 @@ const Listagem = () => {
 
   return (
     <>
-      <EnviosStickyHeadTable rows={formatData(packages)} columns={SColumns} />
+      {
+        !isLoading
+          ? <EnviosStickyHeadTable rows={formatData(packages)} columns={SColumns} />
+          : <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><CircularProgress /></Box>
+      }
     </>
   );
 };
