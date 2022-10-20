@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import EnviosStickyHeadTable from "./Envios";
-import SRows from "./data/envios-list-linhas";
 import SColumns from "./data/envios-list-columns";
+
+import { Input } from "@mui/material";
 import myContract from "views/myContract";
-
-import Web3 from "web3";
-
-
+import web3 from "views/web";
 
 // const registerPackage = async () => {
 //   window.ethereum.request({ method: "eth_requestAccounts" });
@@ -35,42 +33,47 @@ const createData = (id, name, status) => {
   return { id, name, status };
 };
 
+const formatData = (packagesObject) => {
+  let items = [];
+  packagesObject.map((item) => {
+    let dataStatus = item[5];
+    
+	if (dataStatus == "0") dataStatus = "Em processamento";
+    if (dataStatus == "1") dataStatus = "Em transporte";
+    if (dataStatus == "2") dataStatus = "Entregue";
+    if (dataStatus == "3") dataStatus = "Cancelado";
+    
+	let data = createData(item[0], item[1], dataStatus);
+    items.push(data);
+    console.log(data);
+  });
+  return items;
+};
+
 const Listagem = () => {
-  const [lResults, setlResults] = useState([]);
-  const results = [];
+  const [packages, setPackages] = useState([]);
 
   useEffect(() => {
-
-    const listPackages = async () => {
-      window.ethereum.request({ method: "eth_requestAccounts" });
-    
-      const web3 = new Web3(window.ethereum);
+    // Fetch data
+    const fetchData = async () => {
       const receiveAddress = await web3.eth.getAccounts();
-    
-      await myContract.methods.listMySentPackages().call({ from: receiveAddress[0] })
-        .then((result) => {
-
-          for(let i = 0; i < result.length; i++){
-            const data = createData(result[0][0], result[0][1], result[0][5]);
-            results.includes(data);
-          }
-
-          console.log(results)
-
-          setlResults(results)
+      await myContract.methods
+        .listMySentPackages()
+        .call({ from: receiveAddress[0] })
+        .then((res) => {
+          console.log(res);
+          setPackages(res);
         })
-        .catch((error) => {
-          console.warn("Error: List packages", error);
+        .catch((err) => {
+          console.log(err);
         });
     };
-
-    console.log("lResults: ", lResults);
-    console.log("Results: ", results);
-  });
+    fetchData();
+  }, []);
 
   return (
     <>
-      <EnviosStickyHeadTable rows={lResults} columns={SColumns} />
+      <EnviosStickyHeadTable rows={formatData(packages)} columns={SColumns} />
     </>
   );
 };

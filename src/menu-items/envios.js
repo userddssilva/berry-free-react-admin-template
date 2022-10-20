@@ -36,15 +36,15 @@ const envios = {
             type: 'item',
             url: '/cadastro',
             icon: icons.IconPencil,
-            target: true
+            breadcrumbs: false
         },
         {
             id: 'envios3',
             title: 'Update Envio',
             type: 'item',
-            url: '/envios',
+            url: '/update',
             icon: icons.IconClipboardList,
-            target: true
+            breadcrumbs: false
         }
     ]
 };
