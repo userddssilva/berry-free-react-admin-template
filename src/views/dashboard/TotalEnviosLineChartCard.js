@@ -12,12 +12,13 @@ import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
 import SkeletonTotalEnviosCard from 'ui-component/cards/Skeleton/SConcluidosCard';
 
-import ChartDataMonth from './chart-data/total-order-month-line-chart';
-import ChartDataYear from './chart-data/total-order-year-line-chart';
+// import ChartDataMonth from './chart-data/total-order-month-line-chart';
+// import ChartDataYear from './chart-data/total-order-year-line-chart';
 
 // assets
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { useEffect } from 'react';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
     backgroundColor: theme.palette.primary.dark,
@@ -61,12 +62,126 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
     }
 }));
 
+const ChartDataMonth = {
+    type: 'line',
+    height: 90,
+    options: {
+        chart: {
+            sparkline: {
+                enabled: true
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        colors: ['#fff'],
+        fill: {
+            type: 'solid',
+            opacity: 1
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        yaxis: {
+            min: 0,
+            max: 100
+        },
+        tooltip: {
+            theme: 'dark',
+            fixed: {
+                enabled: false
+            },
+            x: {
+                show: false
+            },
+            y: {
+                title: 'Total Order'
+            },
+            marker: {
+                show: false
+            }
+        }
+    },
+    series: [
+        {
+            name: 'Envios',
+            data: [0, 0, 0, 0, 0, 0, 0, 0]
+        }
+    ]
+};
+
+const ChartDataYear = {
+    type: 'line',
+    height: 90,
+    options: {
+        chart: {
+            sparkline: {
+                enabled: true
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        colors: ['#fff'],
+        fill: {
+            type: 'solid',
+            opacity: 1
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        yaxis: {
+            min: 0,
+            max: 100
+        },
+        tooltip: {
+            theme: 'dark',
+            fixed: {
+                enabled: false
+            },
+            x: {
+                show: false
+            },
+            y: {
+                title: 'Total Order'
+            },
+            marker: {
+                show: false
+            }
+        }
+    },
+    series: [
+        {
+            name: 'envios',
+            data: [0, 0, 0, 0, 0, 0, 0, 0]
+        }
+    ]
+};
+
+function getDaysInMonth(month, year) {
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
+        days.push(new Date(date));
+        date.setDate(date.getDate() + 1);
+    }
+    return days;
+}
+
 // ==============================|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||============================== //
 
-const TotalEnviosLineChartCard = ({ isLoading }) => {
+const TotalEnviosLineChartCard = ({ isLoading, totalEnvios, items }) => {
     const theme = useTheme();
 
     const [timeValue, setTimeValue] = useState(false);
+
+    useEffect(() => {
+        ChartDataMonth.series[0].data = items;
+    }, [])
+
+
     const handleChangeTime = (event, newValue) => {
         setTimeValue(newValue);
     };
@@ -124,11 +239,11 @@ const TotalEnviosLineChartCard = ({ isLoading }) => {
                                             <Grid item>
                                                 {timeValue ? (
                                                     <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                                        108K
+                                                        {totalEnvios}
                                                     </Typography>
                                                 ) : (
                                                     <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                                        961M
+                                                        {totalEnvios}
                                                     </Typography>
                                                 )}
                                             </Grid>
@@ -158,7 +273,7 @@ const TotalEnviosLineChartCard = ({ isLoading }) => {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        {timeValue ? <Chart {...ChartDataMonth} /> : <Chart {...ChartDataYear} />}
+                                        {timeValue ? <Chart {...ChartDataMonth} /> : <Chart {...ChartDataMonth} />}
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -170,8 +285,5 @@ const TotalEnviosLineChartCard = ({ isLoading }) => {
     );
 };
 
-TotalEnviosLineChartCard.propTypes = {
-    isLoading: PropTypes.bool
-};
 
 export default TotalEnviosLineChartCard;

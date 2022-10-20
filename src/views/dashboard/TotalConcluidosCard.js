@@ -56,7 +56,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const TotalConcluidosCard = ({ isLoading }) => {
+const TotalConcluidosCard = ({ isLoading, totalConcluidos }) => {
     const theme = useTheme();
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -144,7 +144,7 @@ const TotalConcluidosCard = ({ isLoading }) => {
                                 <Grid container alignItems="center">
                                     <Grid item>
                                         <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                            500M
+                                            {totalConcluidos}
                                         </Typography>
                                     </Grid>
                                     <Grid item>

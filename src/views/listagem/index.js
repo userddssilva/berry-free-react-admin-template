@@ -10,29 +10,6 @@ import web3 from "views/web";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-
-// const registerPackage = async () => {
-//   window.ethereum.request({ method: "eth_requestAccounts" });
-
-//   const web3 = new Web3(window.ethereum);
-
-//   const receiveAddress = await web3.eth.getAccounts();
-//   const newPackage = [
-//     "iPhone 12 128GB Branco",
-//     ["Av Comendador Jose Cruz", "Lago Azul", "Manaus", "AM", "123", "apto 123"],
-//   ];
-
-//   await myContract.methods
-//     .registerPackage(newPackage, "0xbe2Ed94A81F0a97ACeb21E88c2a69Cfd17631533")
-//     .send({ from: receiveAddress[0] })
-//     .then((result) => {
-//       console.log("Result register: ", result);
-//     })
-//     .catch((error) => {
-//       console.warn("Error: Register pacakge", error);
-//     });
-// };
-
 const createData = (id, name, status) => {
   return { id, name, status };
 };

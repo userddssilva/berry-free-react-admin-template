@@ -39,7 +39,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ==============================|| DASHBOARD - TOTAL INCOME LIGHT CARD ||============================== //
 
-const TotalCanceladosCard = ({ isLoading }) => {
+const TotalCanceladosCard = ({ isLoading, totalCancelado }) => {
     const theme = useTheme();
 
     return (
@@ -70,7 +70,7 @@ const TotalCanceladosCard = ({ isLoading }) => {
                                         mt: 0.45,
                                         mb: 0.45
                                     }}
-                                    primary={<Typography variant="h4">10k</Typography>}
+                                    primary={<Typography variant="h4">{totalCancelado}</Typography>}
                                     secondary={
                                         <Typography
                                             variant="subtitle2"

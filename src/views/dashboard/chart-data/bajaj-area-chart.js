@@ -34,6 +34,7 @@ const chartData = {
     },
     series: [
         {
+            name:"Concluídos",
             data: [0, 15, 10, 50, 30, 40, 25]
         }
     ]

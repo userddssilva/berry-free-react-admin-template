@@ -16,7 +16,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 
 // chart data
-import chartData from './chart-data/total-growth-bar-chart';
+// import chartData from './chart-data/total-growth-bar-chart';
 
 const status = [
     {
@@ -33,10 +33,96 @@ const status = [
     }
 ];
 
+
+const chartData = {
+    height: 480,
+    type: 'bar',
+    options: {
+        chart: {
+            id: 'bar-chart',
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        },
+        responsive: [
+            {
+                breakpoint: 480,
+                options: {
+                    legend: {
+                        position: 'bottom',
+                        offsetX: -10,
+                        offsetY: 0
+                    }
+                }
+            }
+        ],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '50%'
+            }
+        },
+        xaxis: {
+            type: 'category',
+            categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+        },
+        legend: {
+            show: true,
+            fontSize: '14px',
+            fontFamily: `'Roboto', sans-serif`,
+            position: 'bottom',
+            offsetX: 20,
+            labels: {
+                useSeriesColors: false
+            },
+            markers: {
+                width: 16,
+                height: 16,
+                radius: 5
+            },
+            itemMargin: {
+                horizontal: 15,
+                vertical: 8
+            }
+        },
+        fill: {
+            type: 'solid'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        grid: {
+            show: true
+        }
+    },
+    series: [
+        {
+            name: 'Transito',
+            data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
+        },
+        {
+            name: 'Cancelados',
+            data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
+        },
+        {
+            name: 'Concluídos',
+            data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
+        },
+        {
+            name: 'Tratamento',
+            data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
+        }
+    ]
+};
+
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
-const TotalStatusEnviosBarChartCard = ({ isLoading }) => {
-    const [value, setValue] = useState('hoje');
+const TotalStatusEnviosBarChartCard = ({ isLoading, data, totalEnvios }) => {
+    const [value, setValue] = useState('ano');
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
 
@@ -52,6 +138,10 @@ const TotalStatusEnviosBarChartCard = ({ isLoading }) => {
     const secondaryLight = theme.palette.secondary.light;
 
     useEffect(() => {
+        chartData.series[0].data = data[1];
+        chartData.series[1].data = data[3];
+        chartData.series[2].data = data[2];
+        chartData.series[3].data = data[0];
         const newChartData = {
             ...chartData.options,
             colors: [primary200, primaryDark, secondaryMain, secondaryLight],
@@ -103,7 +193,7 @@ const TotalStatusEnviosBarChartCard = ({ isLoading }) => {
                                             <Typography variant="subtitle2">Envios</Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Typography variant="h3">832M</Typography>
+                                            <Typography variant="h3">{totalEnvios}</Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>

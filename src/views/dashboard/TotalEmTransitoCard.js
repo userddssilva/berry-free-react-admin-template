@@ -41,7 +41,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ==============================|| DASHBOARD - TOTAL INCOME DARK CARD ||============================== //
 
-const TotalEmTransitoCard = ({ isLoading }) => {
+const TotalEmTransitoCard = ({ isLoading, totalTransito }) => {
     const theme = useTheme();
 
     return (
@@ -74,12 +74,12 @@ const TotalEmTransitoCard = ({ isLoading }) => {
                                     }}
                                     primary={
                                         <Typography variant="h4" sx={{ color: '#fff' }}>
-                                            203k
+                                            {totalTransito}
                                         </Typography>
                                     }
                                     secondary={
                                         <Typography variant="subtitle2" sx={{ color: 'primary.light', mt: 0.25 }}>
-                                            Transito
+                                            Processamento
                                         </Typography>
                                     }
                                 />
